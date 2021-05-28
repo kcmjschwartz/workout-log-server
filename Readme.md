@@ -1,4 +1,4 @@
-
+Screenshots of completed tests.
 
 # /user/register	POST	Allows a new user to be created with a username and password.
 https://github.com/kcmjschwartz/workout-log-server/blob/main/testScreenshots/user-register-POST.JPG
@@ -15,10 +15,12 @@ https://github.com/kcmjschwartz/workout-log-server/blob/main/testScreenshots/all
 # /log/:id	GET	Gets individual logs by  for an individual user.
 https://github.com/kcmjschwartz/workout-log-server/blob/main/testScreenshots/log-by-id-for-specific-user%20-%20GET.JPG
 
-/log/:id	PUT	Allows individual logs to be updated by a user.
+# /log/:id	PUT	Allows individual logs to be updated by a user.
+https://github.com/kcmjschwartz/workout-log-server/blob/main/testScreenshots/update-log-PUT.JPG
 
 
-/log/:id	DELETE	Allows individual logs to be deleted by a user.
+# /log/:id	DELETE	Allows individual logs to be deleted by a user.
+https://github.com/kcmjschwartz/workout-log-server/blob/main/testScreenshots/delete-log-DELETE.JPG
 
 
 
