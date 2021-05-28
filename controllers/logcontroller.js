@@ -8,7 +8,7 @@ const middleware = require("../middleware");
 ===============
 */
 
-router.post('/create', middleware.validateSession, async (req, res) =>{
+router.post('/', middleware.validateSession, async (req, res) =>{
     const {description, definition, result} = req.body.log;
     const {id} = req.user;
     const logEntry = {
@@ -33,7 +33,7 @@ router.post('/create', middleware.validateSession, async (req, res) =>{
 ====================
  */
 
-router.get("/mine", middleware.validateSession, async(req, res) => {
+router.get("/", middleware.validateSession, async(req, res) => {
     let {id} = req.user;
     try{
         const userLogs = await LogModel.findAll({
@@ -55,8 +55,8 @@ router.get("/mine", middleware.validateSession, async(req, res) => {
 =======================
 */
 
-router.get("/mine/:entryId", middleware.validateSession, async(req, res) => {
-    const logId = req.params.entryId;
+router.get("/:id", middleware.validateSession, async(req, res) => {
+    const logId = req.params.id;
     const userId = req.user.id;
     try {
     const results = await LogModel.findAll({
@@ -80,7 +80,36 @@ router.get("/mine/:entryId", middleware.validateSession, async(req, res) => {
 * UPDATE LOGS 
 =======================
 */
+router.put("/:id", middleware.validateSession, async (req, res) => {
+    const { description, definition, result } = req.body;
+    const logId = req.params.id;
+    const userId = req.user.id;
 
+    // const query = {
+    //     where: {
+    //         id: logId,
+    //         owner_id: userId
+    //     }
+    // };
+
+    // const updatedLog = {
+    //     description: description,
+    //     definition: definition,
+    //     result: result
+    // };
+
+    try {
+        const update = await LogModel.update({description, definition, result},
+            {where: {id: logId, owner_id:userId }});
+        res.status(200).json({
+            update,
+            message: "Log has been updated."});
+    } catch (err) {
+        res.status(500).json({ 
+            message: "Unable to update log",
+            error: err});
+    }
+});
 
 
 
