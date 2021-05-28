@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const {LogModel} = require('../models');
 const middleware = require("../middleware");
+const Log = require('../models/log');
 
 /*
 ===============
@@ -85,19 +86,6 @@ router.put("/:id", middleware.validateSession, async (req, res) => {
     const logId = req.params.id;
     const userId = req.user.id;
 
-    // const query = {
-    //     where: {
-    //         id: logId,
-    //         owner_id: userId
-    //     }
-    // };
-
-    // const updatedLog = {
-    //     description: description,
-    //     definition: definition,
-    //     result: result
-    // };
-
     try {
         const update = await LogModel.update({description, definition, result},
             {where: {id: logId, owner_id:userId }});
@@ -118,6 +106,24 @@ router.put("/:id", middleware.validateSession, async (req, res) => {
 * DELETE LOGS 
 =======================
 */
+router.delete("/:id", middleware.validateSession, async(req, res) =>{
+    const logId = req.params.id;
+    const userId = req.user.id;
 
+    try {
+        const logDeleted = await LogModel.destroy({
+            where: {id: logId, owner_id:userId }
+        })
+        res.status(200).json({
+            message: "Log deleted",
+            logDeleted
+        })
+
+    }catch (err) {
+        res.status(500).json({
+            message: `Failed to delete log: ${err}`
+        })
+    }
+})
 
 module.exports = router;
